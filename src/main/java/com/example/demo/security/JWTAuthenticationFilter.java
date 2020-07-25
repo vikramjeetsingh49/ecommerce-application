@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import com.auth0.jwt.JWT;
+import com.example.demo.model.requests.CreateUserRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +34,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest req,
                                                 HttpServletResponse res) throws AuthenticationException {
         try {
-            com.example.demo.model.persistence.User credentials = new ObjectMapper()
-                    .readValue(req.getInputStream(), com.example.demo.model.persistence.User.class);
+            CreateUserRequest credentials = new ObjectMapper()
+                    .readValue(req.getInputStream(), CreateUserRequest.class);
             log.info("Attempting authentication for user : {}", credentials.getUsername());
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
